@@ -32,10 +32,10 @@ W.clock = {
         if (kind === 'tick') {
           const now = new Date();
           const H = now.getHours(), h12 = hour12();
-          hh.textContent = h12 ? String(H % 12 || 12) : pad(H);
+          hh.textContent = window.PhoneBoxI18n.digits(h12 ? String(H % 12 || 12) : pad(H));
           ap.textContent = h12 ? (H < 12 ? 'AM' : 'PM') : '';
-          mm.textContent = pad(now.getMinutes());
-          ss.textContent = cfg.display?.showSeconds === false ? '' : pad(now.getSeconds());
+          mm.textContent = window.PhoneBoxI18n.digits(pad(now.getMinutes()));
+          ss.textContent = cfg.display?.showSeconds === false ? '' : window.PhoneBoxI18n.digits(pad(now.getSeconds()));
           // the colon blinks once a second from here, not from a CSS animation: a running animation makes the browser draw a frame
           // on every display refresh (120 a second on some phones) for something that changes once a second
           colon.classList.toggle('dim', now.getSeconds() % 2 === 1);

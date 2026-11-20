@@ -1,0 +1,31 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const file = path.resolve(__dirname, '../android/app/src/main/assets/www/i18n.js');
+const root = {};
+const context = { window: {}, navigator: { languages: ['fa-IR'] }, document: { documentElement: root, head: null }, localStorage: { getItem: () => null, setItem: () => {} } };
+vm.runInNewContext(fs.readFileSync(file, 'utf8'), context);
+const i = context.window.PhoneBoxI18n;
+assert.equal(i.getLang(), 'fa');
+assert.equal(i.getLocale(), 'fa-IR');
+assert.equal(root.dir, 'rtl');
+assert.equal(i.digits('12:05'), '۱۲:۰۵');
+assert.equal(i.t('lang.label'), 'زبان');
+assert.equal(i.t('panel.switchingTo', {target: 'Work'}).includes('Work'), true);
+for (const key of Object.keys(i.STRINGS.en)) {
+  assert.ok(i.STRINGS.fa[key], `Missing fa string: ${key}`);
+  const vars = s => (s.match(/\{\w+\}/g) || []).sort().join(',');
+  assert.equal(vars(i.STRINGS.fa[key]), vars(i.STRINGS.en[key]), `Placeholders changed: ${key}`);
+  const tags = s => (s.match(/<[^>]+>/g) || []).sort().join(',');
+  assert.equal(tags(i.STRINGS.fa[key]), tags(i.STRINGS.en[key]), `Markup changed: ${key}`);
+}
+for (const key of Object.keys(i.CATALOG.vi)) assert.ok(i.CATALOG.fa[key], `Missing catalog: ${key}`);
+for (const key of Object.keys(i.PANEL['pt-BR'])) assert.ok(i.PANEL.fa[key], `Missing panel: ${key}`);
+i.setLang('en');
+assert.equal(root.dir, 'ltr');
+assert.equal(i.digits('12:05'), '12:05');
+assert.equal(i.t('lang.label'), 'Language');
+i.setLang('fa');
+assert.equal(root.dir, 'rtl');
+console.log(`PASS: ${Object.keys(i.STRINGS.fa).length} strings, ${Object.keys(i.CATALOG.fa).length} catalog entries, ${Object.keys(i.PANEL.fa).length} panel literals; RTL switching, digit display, HTML and placeholders`);

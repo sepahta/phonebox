@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pair_title">اتصال به رایانه؟</string>
+    <string name="pair_message">«%1$s» در %2$s (درگاه %3$d).\n\nبررسی کنید که پنجرهٔ اتصال روی رایانه کد %4$s را نشان دهد.\n\nفقط اگر خودتان اتصال را روی آن رایانه شروع کرده‌اید ادامه دهید.</string>
+    <string name="pair_positive">اتصال</string>
+    <string name="pair_negative">انصراف</string>
+    <string name="pair_progress">در حال اتصال به %1$s…</string>
+    <string name="pair_done">به %1$s متصل شد</string>
+    <string name="pair_failed_title">اتصال انجام نشد</string>
+    <string name="pair_failed_unreachable">دسترسی به %1$s در %2$s ممکن نیست. گوشی و رایانه باید به یک شبکه متصل باشند (یا هر دو روی Tailscale باشند) و دیوارهٔ آتش رایانه باید به PhoneBox اجازه دهد.</string>
+    <string name="pair_failed_code">%1$s کد را نپذیرفت؛ این کد یک‌بار و تا ۵ دقیقه قابل استفاده است. اتصال را دوباره روی رایانه شروع کنید.</string>
+    <string name="pair_failed_answer">%1$s پاسخ %2$d داد.</string>
+    <string name="pair_failed_certificate">گواهی رایانه با کد QR متفاوت است. اتصال را دوباره شروع کنید.</string>
+    <string name="ok">تأیید</string>
+</resources>
